@@ -41,10 +41,10 @@ $cabangId = $cabang['id'];
                 'status'    => 'aktif',
             ],
             [
-                'nama'      => 'Admin Cabang ',
+                'nama'      => 'Admin',
                 'username'  => 'admin1',
                 'password'  => '123',
-                'role'      => 'admin_cabang',
+                'role'      => 'admin',
                 'cabang_id' => $cabangId,
                 'status'    => 'aktif',
             ],

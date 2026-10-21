@@ -10,7 +10,7 @@ class Dashboard extends BaseController
 
         $namaDashboard = [
             'kasir'        => 'Dashboard Kasir',
-            'admin_cabang' => 'Dashboard Admin Cabang',
+            'admin'        => 'Dashboard Admin',
             'pemilik'      => 'Dashboard Pemilik',
         ];
 

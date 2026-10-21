@@ -64,37 +64,22 @@
             </p>
         </div>
 
-       <?php if ($error = session()->getFlashdata('error')): ?>
-    <div class="alert alert-danger" role="alert">
-        <?= esc($error) ?>
-    </div>
-<?php endif; ?>
+        <?php
+        $errorMessage = session()->getFlashdata('error');
+        $successMessage = session()->getFlashdata('success');
+        ?>
 
-<?php if ($success = session()->getFlashdata('success')): ?>
-    <div class="alert alert-success" role="alert">
-        <?= esc($success) ?>
-    </div>
-<?php endif; ?>
+        <?php if ($errorMessage): ?>
+            <div class="alert alert-danger" role="alert">
+                <?= esc($errorMessage) ?>
+            </div>
+        <?php endif; ?>
 
-
-        
-<?php
-$errorMessage = session()->getFlashdata('error');
-$successMessage = session()->getFlashdata('success');
-?>
-
-<?php if ($errorMessage): ?>
-    <div class="alert alert-danger" role="alert">
-        <?= esc($errorMessage) ?>
-    </div>
-<?php endif; ?>
-
-<?php if ($successMessage): ?>
-    <div class="alert alert-success" role="alert">
-        <?= esc($successMessage) ?>
-    </div>
-<?php endif; ?>
-
+        <?php if ($successMessage): ?>
+            <div class="alert alert-success" role="alert">
+                <?= esc($successMessage) ?>
+            </div>
+        <?php endif; ?>
 
         <form action="<?= site_url('login') ?>" method="post">
             <?= csrf_field() ?>

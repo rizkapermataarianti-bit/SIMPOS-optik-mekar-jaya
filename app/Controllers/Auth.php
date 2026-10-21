@@ -2,15 +2,14 @@
 
 namespace App\Controllers;
 
-use App\Models\UsersModel;
+use App\Models\UserModel;
 
 class Auth extends BaseController
 {
     public function login()
     {
-        // Jika sudah login, langsung ke dashboard.
         if (session()->get('isLoggedIn')) {
-            return redirect()->to(site_url('dashboard'));
+            return redirect()->to('/dashboard');
         }
 
         return view('auth/login');
@@ -21,61 +20,58 @@ class Auth extends BaseController
         $username = trim((string) $this->request->getPost('username'));
         $password = (string) $this->request->getPost('password');
 
-        // Periksa input kosong.
         if ($username === '' || $password === '') {
-            return redirect()->to(site_url('login'))
+            return redirect()->to('/login')
                 ->withInput()
                 ->with('error', 'Username dan password wajib diisi.');
         }
 
-        $usersModel = new UsersModel();
+        $userModel = new UserModel();
 
-        // Cari akun berdasarkan username.
-        $user = $usersModel
+        $user = $userModel
             ->where('username', $username)
             ->first();
 
-        // Tolak jika username tidak ditemukan.
-        if (!$user) {
-            return redirect()->to(site_url('login'))
+        if (!$user || $user['status'] !== 'aktif') {
+            return redirect()->to('/login')
+                ->withInput()
+                ->with('error', 'Username atau password salah, atau akun tidak aktif.');
+        }
+
+        $storedPassword = (string) $user['password'];
+        $passwordValid = password_verify($password, $storedPassword);
+
+        if (!$passwordValid && hash_equals($storedPassword, $password)) {
+            $passwordValid = true;
+
+            $userModel->update($user['id'], [
+                'password' => password_hash($password, PASSWORD_DEFAULT),
+            ]);
+        }
+
+        if (!$passwordValid) {
+            return redirect()->to('/login')
+                ->withInput()
                 ->with('error', 'Username atau password salah.');
         }
 
-        // Tolak jika akun tidak aktif.
-        if (($user['status'] ?? '') !== 'aktif') {
-            return redirect()->to(site_url('login'))
-                ->with('error', 'Akun tidak aktif.');
-        }
+        $rolesDiizinkan = ['kasir', 'admin', 'pemilik'];
 
-        // Verifikasi password hash.
-        $passwordTersimpan = (string) ($user['password'] ?? '');
-
-        if (
-            $passwordTersimpan === '' ||
-            !password_verify($password, $passwordTersimpan)
-        ) {
-            return redirect()->to(site_url('login'))
-                ->with('error', 'Username atau password salah.');
-        }
-
-        // Periksa role akun.
-        $rolesDiizinkan = ['kasir', 'admin_cabang', 'pemilik'];
-
-        if (!in_array($user['role'] ?? '', $rolesDiizinkan, true)) {
-            return redirect()->to(site_url('login'))
+        if (!in_array($user['role'], $rolesDiizinkan, true)) {
+            return redirect()->to('/login')
+                ->withInput()
                 ->with('error', 'Peran akun tidak valid.');
         }
 
-        // Kasir dan admin cabang harus memiliki cabang.
         if (
-            in_array($user['role'], ['kasir', 'admin_cabang'], true) &&
+            in_array($user['role'], ['kasir', 'admin'], true) &&
             empty($user['cabang_id'])
         ) {
-            return redirect()->to(site_url('login'))
+            return redirect()->to('/login')
+                ->withInput()
                 ->with('error', 'Akun belum terhubung dengan cabang.');
         }
 
-        // Buat sesi hanya setelah semua pemeriksaan berhasil.
         session()->regenerate(true);
 
         session()->set([
@@ -87,14 +83,14 @@ class Auth extends BaseController
             'isLoggedIn' => true,
         ]);
 
-        return redirect()->to(site_url('dashboard'));
+        return redirect()->to('/dashboard');
     }
 
     public function logout()
     {
         session()->destroy();
 
-        return redirect()->to(site_url('login'))
+        return redirect()->to('/login')
             ->with('success', 'Kamu berhasil logout.');
     }
 }

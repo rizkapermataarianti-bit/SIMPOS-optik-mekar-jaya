@@ -19,7 +19,7 @@ class AuthFilter implements FilterInterface
 
         $role = session()->get('role');
 
-        if (!in_array($role, ['kasir', 'admin_cabang', 'pemilik'], true)) {
+        if (!in_array($role, ['kasir', 'admin', 'pemilik'], true)) {
             session()->destroy();
 
             return redirect()->to('/login')
