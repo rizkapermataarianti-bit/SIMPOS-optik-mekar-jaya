@@ -1,4 +1,32 @@
-# CodeIgniter 4 Framework
+# SIMPOS Optik Mekar Jaya
+
+## Panduan Struktur SIMPOS Optik Mekar Jaya
+
+Folder aplikasi di `app/` sudah dikelompokkan mengikuti pola CodeIgniter 4. Saat
+mengembangkan fitur, letakkan setiap jenis file di folder yang sesuai:
+
+| Lokasi | Isi |
+| --- | --- |
+| `app/Controllers/` | Alur permintaan dan penghubung antara model dengan tampilan |
+| `app/Models/` | Akses dan aturan data database |
+| `app/Views/` | Tampilan halaman, dikelompokkan per fitur seperti `auth/` dan `dashboard/` |
+| `app/Config/` | Pengaturan aplikasi, route, database, session, dan keamanan |
+| `app/Filters/` | Pemeriksaan sebelum atau sesudah request, seperti autentikasi |
+| `app/Database/Migrations/` | Perubahan struktur tabel database |
+| `app/Database/Seeds/` | Data awal atau data contoh untuk database |
+| `public/` | File yang boleh diakses langsung oleh browser dan entry point aplikasi |
+| `writable/` | File runtime seperti log, cache, session, dan upload |
+| `system/` | Kode inti CodeIgniter; jangan letakkan kode fitur SIMPOS di sini |
+| `tests/` | Pengujian otomatis |
+
+Contoh mengikuti alur login: route di `app/Config/Routes.php` menerima request,
+`app/Controllers/Auth.php` memproses login, `app/Models/UserModel.php`
+mengakses pengguna, lalu `app/Views/auth/login.php` menampilkan form.
+
+Untuk fitur baru, kelompokkan tampilan di subfolder berdasarkan nama fitur,
+misalnya `app/Views/barang/`, dan gunakan nama file yang menjelaskan fungsinya.
+Jangan memindahkan file konfigurasi inti CodeIgniter atau mengubah nama folder
+standar tanpa memperbarui konfigurasi dan memeriksa dampaknya.
 
 ## What is CodeIgniter?
 
