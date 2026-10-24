@@ -52,3 +52,14 @@ body {
     background: var(--simpos-primary-dark);
     color: #fff;
 }
+
+/* Sidebar menu */
+.sidebar-menu {
+    position: sticky;
+    top: 1rem;
+}
+
+.sidebar-menu .list-group-item.active {
+    background: var(--simpos-primary);
+    border-color: var(--simpos-primary);
+}

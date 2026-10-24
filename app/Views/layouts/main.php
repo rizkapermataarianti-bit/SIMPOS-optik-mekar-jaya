@@ -29,10 +29,18 @@
         </div>
     </nav>
 
-    <main class="container py-5">
+    <main class="container py-4">
         <?= $this->include('partials/flash') ?>
 
-        <?= $this->renderSection('content') ?>
+        <div class="row g-4">
+            <div class="col-lg-3 col-xl-2">
+                <?= $this->include('partials/sidebar') ?>
+            </div>
+
+            <div class="col-lg-9 col-xl-10">
+                <?= $this->renderSection('content') ?>
+            </div>
+        </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
