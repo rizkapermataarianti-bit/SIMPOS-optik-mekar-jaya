@@ -19,6 +19,15 @@
 # Cache pengujian
 .phpunit.cache/
 /.phpunit.result.cache
+/build/
+
+# File upload runtime
+/writable/uploads/*
+!/writable/uploads/index.html
+
+# Editor
+/.idea/
+*.log
 
 # File sistem operasi
 Thumbs.db

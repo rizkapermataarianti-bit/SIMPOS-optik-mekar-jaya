@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Enums\Role;
 use App\Models\UserModel;
 
 class Auth extends BaseController
@@ -44,8 +45,10 @@ class Auth extends BaseController
         if (!$passwordValid && hash_equals($storedPassword, $password)) {
             $passwordValid = true;
 
+            // Password lama masih plaintext: simpan ulang lewat model
+            // agar otomatis di-hash oleh UserModel::hashPassword().
             $userModel->update($user['id'], [
-                'password' => password_hash($password, PASSWORD_DEFAULT),
+                'password' => $password,
             ]);
         }
 
@@ -55,18 +58,15 @@ class Auth extends BaseController
                 ->with('error', 'Username atau password salah.');
         }
 
-        $rolesDiizinkan = ['kasir', 'admin', 'pemilik'];
+        $role = Role::tryFrom((string) $user['role']);
 
-        if (!in_array($user['role'], $rolesDiizinkan, true)) {
+        if ($role === null) {
             return redirect()->to('/login')
                 ->withInput()
                 ->with('error', 'Peran akun tidak valid.');
         }
 
-        if (
-            in_array($user['role'], ['kasir', 'admin'], true) &&
-            empty($user['cabang_id'])
-        ) {
+        if ($role->requiresCabang() && empty($user['cabang_id'])) {
             return redirect()->to('/login')
                 ->withInput()
                 ->with('error', 'Akun belum terhubung dengan cabang.');
@@ -78,7 +78,7 @@ class Auth extends BaseController
             'user_id'    => $user['id'],
             'nama'       => $user['nama'],
             'username'   => $user['username'],
-            'role'       => $user['role'],
+            'role'       => $role->value,
             'cabang_id'  => $user['cabang_id'],
             'isLoggedIn' => true,
         ]);

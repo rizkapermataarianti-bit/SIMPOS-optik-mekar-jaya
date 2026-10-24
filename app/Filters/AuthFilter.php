@@ -2,6 +2,7 @@
 
 namespace App\Filters;
 
+use App\Enums\Role;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -17,9 +18,9 @@ class AuthFilter implements FilterInterface
                 ->with('error', 'Silakan login terlebih dahulu.');
         }
 
-        $role = session()->get('role');
+        $role = Role::tryFrom((string) session()->get('role'));
 
-        if (!in_array($role, ['kasir', 'admin', 'pemilik'], true)) {
+        if ($role === null) {
             session()->destroy();
 
             return redirect()->to('/login')

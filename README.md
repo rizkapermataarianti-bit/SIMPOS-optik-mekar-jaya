@@ -28,6 +28,26 @@ misalnya `app/Views/barang/`, dan gunakan nama file yang menjelaskan fungsinya.
 Jangan memindahkan file konfigurasi inti CodeIgniter atau mengubah nama folder
 standar tanpa memperbarui konfigurasi dan memeriksa dampaknya.
 
+## Cara Menjalankan
+
+Prasyarat: PHP 8.2+ (XAMPP), MySQL/MariaDB, ekstensi `intl` dan `mbstring`.
+
+1. Nyalakan **MySQL** dari XAMPP Control Panel.
+2. Buka terminal di folder proyek, lalu jalankan:
+
+   ```powershell
+   php spark serve --port 8082
+   ```
+
+   Di VS Code cukup tekan `Ctrl + Shift + B` (task "SIMPOS: Jalankan server").
+3. Buka <http://localhost:8082>.
+4. Login dengan akun contoh: `pemilik` / `123`, `admin1` / `123`, `kasir1` / `123`.
+
+Port 8082 dipakai karena 8080/8081 sering dipakai aplikasi lain. Kalau port diubah,
+sesuaikan juga `app.baseURL` di `.env`. Database awal bisa dibuat dengan
+`php spark migrate` lalu `php spark db:seed CabangSeeder` dan `php spark db:seed UserSeeder`
+(atau import `dbsimpos.sql` lewat phpMyAdmin).
+
 ## What is CodeIgniter?
 
 CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
