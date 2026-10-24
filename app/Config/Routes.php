@@ -7,9 +7,17 @@ use CodeIgniter\Router\RouteCollection;
 // Halaman utama langsung menampilkan login.
 $routes->get('/', 'Auth::login');
 
-// Login
+// Login kasir
 $routes->get('login', 'Auth::login');
 $routes->post('login', 'Auth::prosesLogin');
+
+// Login admin cabang
+$routes->get('admin/login', 'Auth::login/admin');
+$routes->post('admin/login', 'Auth::prosesLogin/admin');
+
+// Login pemilik
+$routes->get('owner/login', 'Auth::login/pemilik');
+$routes->post('owner/login', 'Auth::prosesLogin/pemilik');
 
 // Logout
 $routes->post('logout', 'Auth::logout');

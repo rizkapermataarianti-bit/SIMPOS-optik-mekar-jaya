@@ -2,68 +2,184 @@
 
 <?= $this->section('content') ?>
 
-<div class="card login-card shadow-sm p-4 p-md-5">
+<div class="page-bg auth">
+    <div class="auth-card">
 
-    <div class="text-center mb-4">
-        <div class="brand-icon">👓</div>
+        <section class="auth-visual">
+            <img src="<?= base_url('assets/img/login-approved-visual.jpg') ?>" alt="Koleksi kacamata Optik Mekar Jaya">
+            <div class="tint"></div>
 
-        <h4 class="fw-bold mb-2">SIMPOS Optik Mekar Jaya</h4>
+            <div class="auth-copy">
+                <span class="overline">OPTIK MEKAR JAYA</span>
+                <h1>
+                    Solusi Penglihatan untuk Hidup yang <em>Lebih Baik</em>
+                </h1>
+                <p>
+                    Layanan optik modern dengan produk berkualitas dan pelayanan profesional
+                    untuk setiap gaya Anda.
+                </p>
+            </div>
 
-        <p class="text-secondary mb-0">
-            Silakan login untuk melanjutkan
-        </p>
+            <div class="auth-tags" aria-hidden="true">
+                <span>FRAME</span>
+                <span>LENSA</span>
+                <span>GAYA</span>
+                <span>KEPERCAYAAN</span>
+            </div>
+        </section>
+
+        <section class="auth-form">
+            <div class="brand-row">
+                <span class="brand-badge-lg">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="6" cy="15" r="4"/>
+                        <circle cx="18" cy="15" r="4"/>
+                        <path d="M14 15a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/>
+                        <path d="M2.5 13 5 7c.7-1.3 1.4-2 3-2"/>
+                        <path d="M21.5 13 19 7c-.7-1.3-1.5-2-3-2"/>
+                    </svg>
+                </span>
+                <b>Optik Mekar Jaya</b>
+                <span>Sistem Informasi Optik</span>
+            </div>
+
+            <h2><?= esc($judulMasuk) ?></h2>
+            <p class="sub"><?= esc($subJudul) ?></p>
+
+            <form id="form-login" action="<?= site_url($aksiLogin) ?>" method="post" novalidate>
+                <?= csrf_field() ?>
+
+                <?php if ($pesanError !== null && $pesanError !== ''): ?>
+                    <div class="form-error" role="alert"><?= esc($pesanError) ?></div>
+                <?php endif; ?>
+
+                <?php if ($pesanSukses !== null && $pesanSukses !== ''): ?>
+                    <div class="form-success" role="status"><?= esc($pesanSukses) ?></div>
+                <?php endif; ?>
+
+                <div class="field">
+                    <label for="username">Username</label>
+                    <div class="input-wrap">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        <input
+                            id="username"
+                            type="text"
+                            name="username"
+                            value="<?= old('username', $usernameTersimpan) ?>"
+                            placeholder="Masukkan username"
+                            autocomplete="username"
+                            maxlength="50"
+                            required
+                            autofocus
+                        >
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="password">Password</label>
+                    <div class="input-wrap">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                        <input
+                            id="password"
+                            type="password"
+                            name="password"
+                            placeholder="Masukkan password anda"
+                            autocomplete="current-password"
+                            required
+                        >
+                        <button
+                            type="button"
+                            class="toggle"
+                            id="toggle-password"
+                            aria-label="Tampilkan password"
+                        >
+                            <svg class="icon-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                            <svg class="icon-eye-off" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/>
+                                <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/>
+                                <path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/>
+                                <path d="m2 2 20 20"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <span class="branch-chip">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="6" cy="15" r="4"/>
+                            <circle cx="18" cy="15" r="4"/>
+                            <path d="M14 15a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/>
+                            <path d="M2.5 13 5 7c.7-1.3 1.4-2 3-2"/>
+                            <path d="M21.5 13 19 7c-.7-1.3-1.5-2-3-2"/>
+                        </svg>
+                        <?= esc($chipCabang) ?>
+                    </span>
+                </div>
+
+                <div class="form-row">
+                    <label class="check">
+                        <input
+                            type="checkbox"
+                            name="remember"
+                            value="1"
+                            <?= old('remember') ? 'checked' : '' ?>
+                        >
+                        Ingat saya
+                    </label>
+
+                    <span class="auth-hint">Lupa password? Hubungi admin</span>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="tombol-masuk">
+                    Masuk
+                </button>
+            </form>
+
+            <div class="auth-help">
+                <b>Butuh bantuan masuk?</b>
+                <span><?= esc($bantuan) ?></span>
+            </div>
+        </section>
+
     </div>
-
-    <form action="<?= site_url('login') ?>" method="post">
-        <?= csrf_field() ?>
-
-        <div class="mb-3">
-            <label for="username" class="form-label">
-                Username
-            </label>
-
-            <input
-                type="text"
-                name="username"
-                id="username"
-                class="form-control form-control-lg"
-                placeholder="Masukkan username"
-                value="<?= esc(old('username') ?? '') ?>"
-                autocomplete="username"
-                maxlength="50"
-                required
-                autofocus
-            >
-        </div>
-
-        <div class="mb-4">
-            <label for="password" class="form-label">
-                Password
-            </label>
-
-            <input
-                type="password"
-                name="password"
-                id="password"
-                class="form-control form-control-lg"
-                placeholder="Masukkan password"
-                autocomplete="current-password"
-                required
-            >
-        </div>
-
-        <button
-            type="submit"
-            class="btn btn-login btn-lg w-100"
-        >
-            Login
-        </button>
-    </form>
-
-    <p class="text-center text-secondary small mt-4 mb-0">
-        Sistem Informasi Manajemen Penjualan dan Inventaris
-    </p>
-
 </div>
+
+<script>
+    (function () {
+        var password = document.getElementById('password');
+        var toggle = document.getElementById('toggle-password');
+
+        if (password && toggle) {
+            toggle.addEventListener('click', function () {
+                var tampil = password.type === 'password';
+
+                password.type = tampil ? 'text' : 'password';
+                toggle.classList.toggle('is-visible', tampil);
+                toggle.setAttribute('aria-label', tampil ? 'Sembunyikan password' : 'Tampilkan password');
+                password.focus();
+            });
+        }
+
+        var form = document.getElementById('form-login');
+        var tombol = document.getElementById('tombol-masuk');
+
+        if (form && tombol) {
+            form.addEventListener('submit', function () {
+                tombol.disabled = true;
+                tombol.innerHTML = '<span class="spinner"></span>Memproses...';
+            });
+        }
+    })();
+</script>
 
 <?= $this->endSection() ?>
